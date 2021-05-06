@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Comment review</title>
+</head>
+<body>
+
+<h1 style="font-family:Gill Sans;">Put your comment here</h1>
+<h2 style="font-family:Gill Sans">Reload to send a new message</h2>
+
+</body>
+<script>
+    
+var message;
+ 
+
+    message = prompt("What's your message")
+    fetch('/comments', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify({
+            
+            message
+   
+        })
+    })
+    window.onload = async function() {
+    var api = await fetch('/api')
+    var json = await api.json()
+    console.log(json)
+    for (var i = 0; i < json.length; i++) {
+    var root = document.createElement('div')
+    var thename = document.createElement('div')
+    var themessage = document.createElement('div')
+themessage.textContent = json[i].message
+    root.append(themessage)
+    document.body.append(root)
+}
+}
+</script>
+</html>
